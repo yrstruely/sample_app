@@ -10,6 +10,7 @@ gem 'ruby-mysql', '2.9.3'
 
 group :development do
   gem 'rspec-rails', '2.0.0.beta.18'
+  gem 'annotate-models', '1.0.4'
 end
 
 group :test do
