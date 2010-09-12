@@ -6,7 +6,7 @@ Spork.prefork do
   # if you change any configuration or code from libraries loaded here, you'll
   # need to restart spork for it take effect.
   
-    ENV["RAILS_ENV"] ||= 'test'
+  ENV["RAILS_ENV"] ||= 'test'
   unless defined?(Rails)
     require File.dirname(__FILE__) + "/../config/environment"
   end
@@ -37,6 +37,10 @@ Spork.prefork do
     # Emulate initializer set_clear_dependencies_hook in 
     # railties/lib/rails/application/bootstrap.rb
     ActiveSupport::Dependencies.clear
+
+    def test_sign_in(user)
+      controller.current_user = user
+    end
   end
 end
 
@@ -85,4 +89,8 @@ RSpec.configure do |config|
   # examples within a transaction, comment the following line or assign false
   # instead of true.
   config.use_transactional_fixtures = true
+
+  def test_sign_in(user)
+    controller.current_user = user
+  end
 end
