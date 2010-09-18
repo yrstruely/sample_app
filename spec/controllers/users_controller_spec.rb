@@ -279,9 +279,7 @@ describe UsersController do
 
     describe "as a non-signed-in user" do
       it "should deny access" do
-        test_sign_in(@user)
-        non_signed_in_user = Factory(:user, :email => "non-signed-in_user@example.com")
-        delete :destroy, :id => non_signed_in_user
+        delete :destroy, :id => @user
         response.should redirect_to(signin_path)
       end
     end

@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_filter :authenticate, :only => [:index, :edit, :update]
+  before_filter :authenticate, :only => [:index, :edit, :update, :destroy]
   before_filter :correct_user, :only => [:edit, :update]
   before_filter :admin_user,   :only => :destroy
 
@@ -21,6 +21,7 @@ class UsersController < ApplicationController
   end
 
   def edit
+    @user = User.find(params[:id])
     @title = "Edit user"
   end
 
@@ -46,22 +47,20 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    #authenticate and return
-    #correct_user and return
-    #admin_user and return
-
-    if current_user.admin?
+    #if current_user.admin?
       User.find(params[:id]).destroy
       flash[:success] = "User destroyed."
       redirect_to users_path
-    else unless signed_in? then
-        redirect_to sign_in_path
-      end
-      redirect_to root_path
-    end
+    #else
+    #  if signed_in?
+    #    redirect_to root_path
+    #  else
+    #    redirect_to sign_in_path
+    #  end
+    #end
   end
 
-  private
+  #private
 
   def authenticate
     deny_access unless signed_in?
