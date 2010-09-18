@@ -85,6 +85,38 @@ describe UsersController do
         response.should have_selector("a", :href => "/users?page=2",
                                            :content => "Next")
       end
+
+      it "should not allow non-admins to destroy users" do
+        get :index
+        response.should_not have_selector("a", :href => "/users/" + @user.id.to_s, :content => "delete")
+      end
+
+
+    end
+
+    describe "for admin users" do
+
+      before(:each) do
+        @user = test_sign_in(Factory(:user, :email => "admin@example.com", :admin => true))
+        @second = Factory(:user, :email => "another@example.com")
+        third  = Factory(:user, :email => "another@example.net")
+
+        @users = [@user, @second, third]
+
+        30.times do
+          @users << Factory(:user, :email => Factory.next(:email))
+        end
+      end
+
+      it "should allow them to destroy other users" do
+        get :index
+        response.should have_selector("a", :href => "/users/" + @second.id.to_s, :content => "delete")
+      end
+
+      it "should not allow them to destroy themselves" do
+        get :index
+        response.should_not have_selector("a", :href => "/users/" + @user.id.to_s, :content => "delete")
+      end
     end
   end
 
