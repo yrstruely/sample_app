@@ -47,20 +47,12 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    #if current_user.admin?
-      User.find(params[:id]).destroy
-      flash[:success] = "User destroyed."
-      redirect_to users_path
-    #else
-    #  if signed_in?
-    #    redirect_to root_path
-    #  else
-    #    redirect_to sign_in_path
-    #  end
-    #end
+    User.find(params[:id]).destroy
+    flash[:success] = "User destroyed."
+    redirect_to users_path
   end
 
-  #private
+  private
 
   def authenticate
     deny_access unless signed_in?
