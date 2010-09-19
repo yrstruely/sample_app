@@ -1,7 +1,10 @@
-<%= form_for @micropost do |f| %>
+<%= form_for @micropost, :html => { :name => "new_micropost" } do |f| %>
   <%= render 'shared/error_messages', :object => f.object %>
   <div class="field">
-    <%= f.text_area :content %>
+    <%= f.text_area :content, :onkeyup => "limiter()" %>
+    <script type="text/javascript">
+      document.write("<input type=text name=limit size=4 readonly value="+count+">");
+    </script>
   </div>
   <div class="actions">
     <%= f.submit "Submit" %>

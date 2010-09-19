@@ -5,6 +5,25 @@
     <%= csrf_meta_tag %>
     <%= render 'layouts/stylesheets' %>
     <%= javascript_include_tag :defaults %>
+
+    <!-- Script by hscripts.com -->
+    <script type="text/javascript">
+      //Edit the counter/limiter value as your wish
+      var count = "140";   //Example: var count = "175";
+      function limiter(){
+        var tex = document.getElementById('micropost_content').value;
+        var len = tex.length;
+        if(len > count){
+          tex = tex.substring(0,count);
+          document.getElementById('micropost_content').value =tex;
+          return false;
+        }
+        document.new_micropost.limit.value = count-len;
+      }
+
+    </script>
+    <!-- Script by hscripts.com -->
+
   </head>
   <body>
     <div class="container">
@@ -20,3 +39,5 @@
     </div>
   </body>
 </html>
+
+

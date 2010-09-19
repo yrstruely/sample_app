@@ -38,6 +38,11 @@ describe MicropostsController do
         post :create, :micropost => @attr
         response.should render_template('pages/home')
       end
+
+      it "should not increment the sidebar posts counter" do
+        post :create, :micropost => @attr
+        response.should have_selector("span.microposts", :content => "0 microposts")
+      end
     end
 
     describe "success" do
@@ -65,6 +70,7 @@ describe MicropostsController do
   end
 
   describe "DELETE 'destroy'" do
+    render_views
 
     describe "for an unauthorized user" do
 
